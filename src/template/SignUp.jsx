@@ -94,9 +94,12 @@ const SignUp = () => {
             dispatch(signUp(username, email, password, confirmPassword))
           }
         />
-        <p onClick={() => dispatch(push("/signin"))}>
-          アカウントをお持ちの方はこちら
-        </p>
+        <div className="help">
+          {" "}
+          <p onClick={() => dispatch(push("/signin"))}>
+            アカウントをお持ちの方はこちら
+          </p>
+        </div>
       </div>
     </div>
   );

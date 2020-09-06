@@ -38,7 +38,10 @@ const Reset = () => {
           label={"RESET PASSWORD"}
           onClick={() => dispatch(resetPassword(email))}
         />
-        <p onClick={() => dispatch(push("/signin"))}>ログイン画面に戻る</p>
+        <div className="help">
+          {" "}
+          <p onClick={() => dispatch(push("/signin"))}>ログイン画面に戻る</p>
+        </div>
       </div>
     </div>
   );

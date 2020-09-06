@@ -3,8 +3,6 @@ import { TextInput, PrimaryButton } from "../components/UIkit/index";
 import { useDispatch, useSelector } from "react-redux";
 import { signIn } from "../reducks/users/operations";
 import { push } from "connected-react-router";
-import { getProducts } from "../reducks/products/selectors";
-import { getIsSignedIn } from "../reducks/users/selectors";
 
 const SignIn = () => {
   const dispatch = useDispatch();
@@ -51,7 +49,11 @@ const SignIn = () => {
         type={"password"}
         onChange={inputPassword}
       />
-
+      <div className="guestAccount">
+        <h3>ゲストアカウント</h3>
+        <p>メールアドレス: guest@gmail.com</p>
+        <p>パスワード: password</p>
+      </div>
       <div className="module-spacer--medium" />
 
       <div className="center">
@@ -60,12 +62,14 @@ const SignIn = () => {
           onClick={() => dispatch(signIn(email, password))}
         />
         <div className="module-spacer--medium" />
-        <p onClick={() => dispatch(push("/signup"))}>
-          アカウントをお持ちでない方はこちら
-        </p>
-        <p onClick={() => dispatch(push("/signin/reset"))}>
-          パスワードを忘れた方はこちら
-        </p>
+        <div className="help">
+          <p onClick={() => dispatch(push("/signup"))}>
+            アカウントをお持ちでない方はこちら
+          </p>
+          <p onClick={() => dispatch(push("/signin/reset"))}>
+            パスワードを忘れた方はこちら
+          </p>
+        </div>
       </div>
     </div>
   );
