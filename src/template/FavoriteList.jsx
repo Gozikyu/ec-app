@@ -1,9 +1,9 @@
 import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import List from "@material-ui/core/list";
-import { getProductsInCart } from "../reducks/users/selectors";
+import { getProductsInFavorite } from "../reducks/users/selectors";
 import { PrimaryButton, GreyButton } from "../components/UIkit/index";
-import { CartListItem } from "../components/Products/index";
+import { FavoriteListItem } from "../components/Products/index";
 import { push } from "connected-react-router";
 import { makeStyles } from "@material-ui/styles";
 
@@ -17,7 +17,7 @@ const useStyles = makeStyles({
 
 const CartList = () => {
   const selector = useSelector((state) => state);
-  const productsInCart = getProductsInCart(selector);
+  const productsInFavorite = getProductsInFavorite(selector);
   const dispatch = useDispatch();
   const classes = useStyles();
 
@@ -31,11 +31,11 @@ const CartList = () => {
 
   return (
     <section className="c-section-wrapin">
-      <h2 className="u-text__headline">ショッピングカート</h2>
+      <h2 className="u-text__headline">お気に入り商品</h2>
       <List className={classes.root}>
-        {productsInCart.length > 0 &&
-          productsInCart.map((product) => (
-            <CartListItem key={product.cartId} product={product} />
+        {productsInFavorite.length > 0 &&
+          productsInFavorite.map((product) => (
+            <FavoriteListItem key={product.favoriteId} product={product} />
           ))}
       </List>
       <div className="module-spacer--medium " />

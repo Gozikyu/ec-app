@@ -36,6 +36,14 @@ export const fetchProductsInCartAction = (productsInCart) => {
   };
 };
 
+export const FETCH_PRODUCT_IN_FAVORITE = "FETCH_PRODUCT_IN_FAVORITE";
+export const fetchProductsInFavoriteAction = (productsInFavorite) => {
+  return {
+    type: "FETCH_PRODUCT_IN_FAVORITE",
+    payload: productsInFavorite,
+  };
+};
+
 export const FETCH_ORDER_HISTORY = "FETCH_ORDER_HISTORY";
 export const fetchOrderHistoryAction = (orders) => {
   return {

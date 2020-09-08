@@ -2,6 +2,7 @@ import {
   signInAction,
   signOutAction,
   fetchProductsInCartAction,
+  fetchProductsInFavoriteAction,
   fetchOrderHistoryAction,
 } from "./actions";
 import { push } from "connected-react-router";
@@ -158,9 +159,29 @@ export const addProductToCart = (addedProduct) => {
   };
 };
 
+export const addProductToFavorite = (addedProduct) => {
+  return async (dispatch, getState) => {
+    const uid = getState().users.uid;
+    const favoriteRef = db
+      .collection("users")
+      .doc(uid)
+      .collection("favorite")
+      .doc();
+    addedProduct["favoriteId"] = favoriteRef.id;
+    await favoriteRef.set(addedProduct);
+    dispatch(push("/"));
+  };
+};
+
 export const fetchProductsInCart = (productsInCart) => {
   return async (dispatch) => {
     dispatch(fetchProductsInCartAction(productsInCart));
+  };
+};
+
+export const fetchProductsInFavorite = (fetchProductsInFavorite) => {
+  return async (dispatch) => {
+    dispatch(fetchProductsInFavoriteAction(fetchProductsInFavorite));
   };
 };
 

@@ -5,7 +5,10 @@ import { db, FirebaseTimestamp } from "../firebase";
 import { makeStyles } from "@material-ui/styles";
 import HTMLReactParser from "html-react-parser";
 import { ImageSwiper, SizeTable } from "../components/Products/index";
-import { addProductToCart } from "../reducks/users/operations";
+import {
+  addProductToCart,
+  addProductToFavorite,
+} from "../reducks/users/operations";
 
 const useStyles = makeStyles((theme) => ({
   sliderBox: {
@@ -83,6 +86,25 @@ const ProductDetail = (props) => {
     [product]
   );
 
+  const addFavorite = useCallback(
+    (selectedSize) => {
+      const timestamp = FirebaseTimestamp.now();
+      dispatch(
+        addProductToFavorite({
+          added_at: timestamp,
+          description: product.description,
+          gender: product.gender,
+          images: product.images,
+          name: product.name,
+          price: product.price,
+          productId: product.id,
+          size: selectedSize,
+        })
+      );
+    },
+    [product]
+  );
+
   return (
     <section className="c-section-wrapin">
       {product && (
@@ -94,7 +116,11 @@ const ProductDetail = (props) => {
             <h2 className="u-text__headline">{product.name}</h2>
             <p className={classes.price}>¥{product.price.toLocaleString()}</p>
             <div className="module-spacer--small" />
-            <SizeTable sizes={product.sizes} addProduct={addProduct} />
+            <SizeTable
+              sizes={product.sizes}
+              addProduct={addProduct}
+              addFavorite={addFavorite}
+            />
             <div className="module-spacer--small" />
             <p>{returnCodeToBr(product.description)}</p>
           </div>
