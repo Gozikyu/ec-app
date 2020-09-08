@@ -17,7 +17,7 @@ import { TextInput } from "../UIkit/index";
 import { useDispatch, useSelector } from "react-redux";
 import { push } from "connected-react-router";
 import { signOut } from "../../reducks/users/operations";
-import { getIsAdmin } from "../../reducks/users/selectors";
+import { getIsAdmin, getIsSignedIn } from "../../reducks/users/selectors";
 
 const useStyles = makeStyles((theme) => ({
   drawer: {
@@ -42,7 +42,8 @@ const ClosableDrawer = (props) => {
   const { container } = props;
   const dispatch = useDispatch();
   const selector = useSelector((state) => state);
-  const IsAdmin = getIsAdmin(selector);
+  const isAdmin = getIsAdmin(selector);
+  const isSignedIn = getIsSignedIn(selector);
 
   const [keyword, setKeyword] = useState("");
   const inputKeyword = useCallback(
@@ -79,27 +80,29 @@ const ClosableDrawer = (props) => {
   ]);
 
   useEffect(() => {
-    db.collection("categories")
-      .orderBy("order", "asc")
-      .get()
-      .then((shapshots) => {
-        const list = [];
-        shapshots.forEach((snapshot) => {
-          const data = snapshot.data();
+    if (isSignedIn) {
+      db.collection("categories")
+        .orderBy("order", "asc")
+        .get()
+        .then((shapshots) => {
+          const list = [];
+          shapshots.forEach((snapshot) => {
+            const data = snapshot.data();
 
-          list.push({
-            func: selectMenu,
-            label: data.name,
-            id: data.id,
-            value: `/?category=${data.id}`,
+            list.push({
+              func: selectMenu,
+              label: data.name,
+              id: data.id,
+              value: `/?category=${data.id}`,
+            });
           });
+          setFilter((prevState) => [...prevState, ...list]);
         });
-        setFilter((prevState) => [...prevState, ...list]);
-      });
-  }, []);
+    }
+  }, [isSignedIn]);
 
   const menus = [];
-  if (IsAdmin) {
+  if (isAdmin) {
     menus.push(
       {
         func: selectMenu,
