@@ -95,7 +95,6 @@ const ClosableDrawer = (props) => {
           });
         });
         setFilter((prevState) => [...prevState, ...list]);
-        console.log(filters);
       });
   }, []);
 

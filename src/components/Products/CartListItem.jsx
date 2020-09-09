@@ -1,5 +1,6 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { push } from "connected-react-router";
 import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -26,8 +27,10 @@ const useStyles = makeStyles({
 
 const CartListItem = (props) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const selector = useSelector((state) => state);
   const uid = getUserId(selector);
+  const productId = props.product.productId;
 
   const removeProductFromCart = (id) => {
     return db.collection("users").doc(uid).collection("cart").doc(id).delete();
@@ -37,7 +40,11 @@ const CartListItem = (props) => {
   return (
     <>
       <ListItem className={classes.list}>
-        <ListItemAvatar>
+        <ListItemAvatar
+          onClick={() =>
+            dispatch(push("/product/" + productId + "/information"))
+          }
+        >
           <img className={classes.image} src={image} alt="カート商品画像" />
         </ListItemAvatar>
         <div className={classes.text}>

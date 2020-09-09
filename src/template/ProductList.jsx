@@ -3,12 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { ProductCard } from "../components/Products/index";
 import { fetchProducts } from "../reducks/products/operations";
 import { getProducts } from "../reducks/products/selectors";
-import { getIsSignedIn } from "../reducks/users/selectors";
 
 const ProductList = () => {
   const dispatch = useDispatch();
   const selector = useSelector((state) => state);
   const products = getProducts(selector);
+  console.log(products);
 
   const query = selector.router.location.search;
   const gender = /^\?gender=/.test(query) ? query.split("?gender=")[1] : "";

@@ -24,7 +24,7 @@ const Router = () => {
         <Route exact path={"(/)?"} component={ProductList} />
         <Route
           exact
-          path={"/product/:id" + "/infomation"}
+          path={"/product/:id" + "/information"}
           component={ProductDetail}
         />
         <Route path={"/product/edit(/:id)?"} component={ProductEdit} />
