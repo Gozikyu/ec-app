@@ -63,11 +63,13 @@ const ProductCard = (props) => {
       <CardMedia
         image={images[0].path}
         className={classes.media}
-        onClick={() => dispatch(push("/product/" + props.id + "/infomation"))}
+        onClick={() => dispatch(push("/product/" + props.id + "/information"))}
       />
       <CardContent className={classes.content}>
         <div
-          onClick={() => dispatch(push("/product/" + props.id + "/infomation"))}
+          onClick={() =>
+            dispatch(push("/product/" + props.id + "/information"))
+          }
         >
           <Typography color="textSecondary" component="p">
             {props.name}
